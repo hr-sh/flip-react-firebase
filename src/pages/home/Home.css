@@ -1,0 +1,18 @@
+.home .create-post-mobile {
+  margin: 20px 0;
+  padding: 10px;
+  border: 3px dashed #eee;
+  color: #555;
+  border-radius: 6px;
+  gap: 8px;
+  font-size: 0.8rem;
+  background-color: #fbfbfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.home .create-post-mobile img {
+  filter: invert(40%);
+}

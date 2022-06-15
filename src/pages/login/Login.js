@@ -34,8 +34,9 @@ export default function Login() {
         />
       </label>
 
-      {!isloading && <button className="btn">login</button>}
-      {isloading && (
+      {!isloading ? (
+        <button className="btn">login</button>
+      ) : (
         <button disabled className="btn">
           loading..
         </button>

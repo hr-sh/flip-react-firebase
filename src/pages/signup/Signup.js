@@ -39,7 +39,13 @@ export default function Signup() {
 
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
-      <h2>Sign up</h2>
+      <div className="head-signup">
+        <h2>Sign up</h2>
+        <div className="view-image">
+          {!pic && <div className="placeholder"></div>}
+          {pic && <img src={URL.createObjectURL(pic)} alt="user profile" />}
+        </div>
+      </div>
       <label>
         <span>email:</span>
         <input
@@ -72,8 +78,10 @@ export default function Signup() {
         <input type="file" aria-required onChange={handleFileChange} />
         {fileError && <div className="error">{fileError}</div>}
       </label>
-      {!isloading && <button className="btn">sign up</button>}
-      {isloading && (
+
+      {!isloading ? (
+        <button className="btn">sign up</button>
+      ) : (
         <button disabled className="btn">
           loading..
         </button>

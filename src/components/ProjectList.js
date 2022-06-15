@@ -1,10 +1,15 @@
 import "./ProjectList.css";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
+import AddIcon from "../assets/add_icon.svg";
 
 export default function ProjectList({ projects }) {
   return (
     <div>
+      <Link className="create-post-mobile" to="/create">
+        <img src={AddIcon} alt="add new" />
+        <span>click to add new project</span>
+      </Link>
       {projects.length === 0 && (
         <p style={{ marginTop: "10px" }}>No projects yet.</p>
       )}

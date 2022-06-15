@@ -26,6 +26,7 @@ export default function Home() {
         currentFilter={currentFilter}
         setCurrentFilter={setCurrentFilter}
       />
+
       {error && <p className="error">{error}</p>}
       {data && <ProjectList projects={projects} />}
     </div>

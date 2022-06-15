@@ -3,10 +3,12 @@ import Logo from "../assets/flip_icon.svg";
 import { Link } from "react-router-dom";
 import { useSignout } from "../hooks/useSignout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const { doSignOut, error, isloading } = useSignout();
   const { user } = useAuthContext();
+  const location = useLocation();
 
   if (error) {
     console.log(error);
@@ -20,7 +22,7 @@ export default function Navbar() {
           <span>Flip</span>
         </li>
 
-        {!user && (
+        {!user ? (
           <>
             <li>
               <Link to="/login">Login</Link>
@@ -29,18 +31,18 @@ export default function Navbar() {
               <Link to="/signup">Signup</Link>
             </li>
           </>
-        )}
-        {user && (
+        ) : (
           <li>
-            {!isloading && (
+            {location.pathname === "/" && !isloading ? (
               <button className="btn" onClick={doSignOut}>
                 Logout
               </button>
-            )}
-            {isloading && (
-              <button className="btn" disabled>
-                Logging out..
-              </button>
+            ) : (
+              isloading && (
+                <button className="btn" disabled>
+                  Logging out..
+                </button>
+              )
             )}
           </li>
         )}
