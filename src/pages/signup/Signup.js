@@ -75,7 +75,7 @@ export default function Signup() {
       </label>
       <label>
         <span>profile image:</span>
-        <input type="file" aria-required onChange={handleFileChange} />
+        <input type="file" required onChange={handleFileChange} />
         {fileError && <div className="error">{fileError}</div>}
       </label>
 
