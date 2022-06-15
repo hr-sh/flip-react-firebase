@@ -3,12 +3,13 @@ import Logo from "../assets/flip_icon.svg";
 import { Link } from "react-router-dom";
 import { useSignout } from "../hooks/useSignout";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 export default function Navbar() {
   const { doSignOut, error, isloading } = useSignout();
   const { user } = useAuthContext();
   const location = useLocation();
+  const history = useHistory();
 
   if (error) {
     console.log(error);
@@ -17,7 +18,7 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <ul>
-        <li className="logo">
+        <li className="logo" onClick={() => history.push("/")}>
           <img src={Logo} alt="flip site logo" />
           <span>Flip</span>
         </li>

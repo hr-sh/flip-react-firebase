@@ -34,6 +34,10 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!pic) {
+      setFileError("Please select a file");
+      return;
+    }
     doSignUp(email, password, displayName, pic);
   };
 
@@ -75,7 +79,7 @@ export default function Signup() {
       </label>
       <label>
         <span>profile image:</span>
-        <input type="file" required onChange={handleFileChange} />
+        <input type="file" onChange={handleFileChange} />
         {fileError && <div className="error">{fileError}</div>}
       </label>
 

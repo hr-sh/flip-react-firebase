@@ -15,7 +15,8 @@
 .navbar .logo {
   display: flex;
   align-items: center;
-  flex-grow: 1;
+  margin-right: auto;
+  cursor: pointer;
   gap: 10px;
   letter-spacing: 1px;
   color: var(--heading-color);
