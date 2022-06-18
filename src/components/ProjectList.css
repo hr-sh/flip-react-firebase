@@ -1,52 +1,44 @@
-.project-list {
-  margin: 20px 0;
-  /* display: flex;
-  flex-flow: row wrap; */
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+.list-view {
+  overflow: auto;
+  width: 100%;
 }
 
-.project-card {
-  padding: 16px;
+.list-view > div {
+  min-width: 350px;
+}
+
+.list-view table {
+  border-collapse: collapse;
   background-color: #fbfbfb;
-  display: block;
+  color: #333;
   box-shadow: 0px 0px 2px 0px rgb(0 0 0 / 20%);
   border-radius: 6px;
-  text-decoration: none;
-  color: #333;
-  /* margin: 20px 0; */
+  outline: none;
+  width: 100%;
+  border: none;
+  text-align: left;
 }
 
-.project-card:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 2px 0px rgb(0 0 0 / 50%);
+.list-view thead {
+  box-shadow: 0px 0px 2px 0px rgb(0 0 0 / 20%);
 }
 
-.project-card p {
-  color: #aaa;
-  font-weight: 500;
-  font-size: 90%;
+.list-view thead,
+.list-view tbody {
+  font-size: 85%;
+  min-width: 450px;
 }
 
-.project-card .assigned-users ul {
-  margin-top: 20px;
-  border-top: 1px solid #eee;
-  padding-top: 15px;
+.list-view th {
+  padding: 8px;
 }
 
-.project-card .assigned-users li {
-  display: inline-block;
-  position: relative;
-  margin-left: -15px;
+.list-view td {
+  padding: 8px;
 }
 
-.project-card .assigned-users .avatar {
-  width: 30px;
-  height: 30px;
-}
-
-.project-card .assigned-users li:first-child {
-  margin-left: 0px;
+.list-view tbody tr:hover {
+  box-shadow: 0px 0px 2px 0px rgb(0 0 0 / 20%);
+  /* cursor: pointer; */
+  background-color: #f1f1f1;
 }

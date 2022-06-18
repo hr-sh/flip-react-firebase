@@ -34,10 +34,7 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!pic) {
-      setFileError("Please select a file");
-      return;
-    }
+
     doSignUp(email, password, displayName, pic);
   };
 

@@ -11,6 +11,8 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
+  let photoURL =
+    "https://firebasestorage.googleapis.com/v0/b/flip-site-45ca9.appspot.com/o/profilepics%2Fdefault%2Fdownload.png?alt=media&token=1b869d8a-5361-4df7-a67e-326799e203f7";
 
   const doSignUp = async (email, password, displayName, file) => {
     setError(null);
@@ -24,9 +26,11 @@ export const useSignup = () => {
         throw new Error("Could not complete signup");
       }
 
-      const uploadPath = `profilepics/${res.user.uid}/${file.name}`;
-      const image = await projectStorage.ref(uploadPath).put(file);
-      const photoURL = await image.ref.getDownloadURL();
+      if (file) {
+        const uploadPath = `profilepics/${res.user.uid}/${file.name}`;
+        const image = await projectStorage.ref(uploadPath).put(file);
+        photoURL = await image.ref.getDownloadURL();
+      }
 
       await res.user.updateProfile({ displayName, photoURL });
 

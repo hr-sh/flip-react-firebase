@@ -26,21 +26,25 @@ export default function Navbar() {
         {!user ? (
           <>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/login" className="btn auth">
+                Login
+              </Link>
             </li>
             <li>
-              <Link to="/signup">Signup</Link>
+              <Link to="/signup" className="btn auth">
+                Signup
+              </Link>
             </li>
           </>
         ) : (
           <li>
             {location.pathname === "/" && !isloading ? (
-              <button className="btn" onClick={doSignOut}>
+              <button className="btn auth" onClick={doSignOut}>
                 Logout
               </button>
             ) : (
               isloading && (
-                <button className="btn" disabled>
+                <button className="btn auth" disabled>
                   Logging out..
                 </button>
               )

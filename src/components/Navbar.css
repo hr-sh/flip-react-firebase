@@ -35,8 +35,3 @@
   margin-right: 20px;
   transition: all ease-in 0.1s;
 }
-
-.navbar a:hover {
-  text-decoration-color: #333;
-  text-decoration: underline;
-}
