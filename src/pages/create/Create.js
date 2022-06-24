@@ -32,7 +32,7 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
   const [assignedUsers, setAssignedUsers] = useState([]);
 
   const history = useHistory();
@@ -44,9 +44,6 @@ export default function Create() {
     .toISOString()
     .split("T")[0];
 
-  // console.log(min);
-  // console.log(max);
-  // console.log("datestate", dueDate);
   useEffect(() => {
     if (data) {
       const options = data.map((u) => ({ value: u, label: u.displayName }));
@@ -55,11 +52,13 @@ export default function Create() {
     if (data && project && project !== undefined) {
       setTitle(project.title);
       setDetails(project.details);
-      // console.log("project date", project.dueDate.toDate());
+
       setDueDate(project.dueDate.toDate().toISOString().split("T")[0]);
-      const dd = categories.filter((c) => c.value === project.category);
+
+      const dd = categories.find((c) => c.value === project.category);
       console.log(dd);
-      // setCategory(categories.filter((c) => c.value === project.category)[0]);
+      setCategory(categories.find((c) => c.value === project.category));
+
       const d = data
         .map((u) => ({ value: u, label: u.displayName }))
         .filter((o) => {
@@ -71,7 +70,7 @@ export default function Create() {
           });
           return c;
         });
-      // console.log(d);
+
       setAssignedUsers(d);
     }
     if (success) {
@@ -83,7 +82,7 @@ export default function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormError(null);
-    // console.log(title, details, dueDate, category, assignedUsers);
+
     if (!category) {
       setFormError("please select a project category");
       return;
@@ -102,7 +101,7 @@ export default function Create() {
     const project = {
       title,
       details,
-      category,
+      category: category.value,
       dueDate: timestamp.fromDate(new Date(dueDate)),
       comments: [],
       createdBy: {
@@ -161,7 +160,7 @@ export default function Create() {
           <Select
             value={category}
             options={categories}
-            onChange={(option) => setCategory(option.value)}
+            onChange={(option) => setCategory(option)}
           />
         </label>
         <label>
