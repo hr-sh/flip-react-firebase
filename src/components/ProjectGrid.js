@@ -13,15 +13,9 @@ export default function ProjectGrid({ projects }) {
       <div className="project-list">
         {projects.map((d) => (
           <div className="project-card" key={d.id}>
-            <Link to={`/projects/${d.id}`}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <h4>{d.title}</h4>
-              </div>
+            <Link to={`/projects/${d.id}`} style={{ textDecoration: "none" }}>
+              <h4>{d.title}</h4>
+
               <p>Due by {d.dueDate.toDate().toDateString()} </p>
             </Link>
             <div className="assigned-users">

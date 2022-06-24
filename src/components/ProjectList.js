@@ -21,29 +21,32 @@ export default function ProjectList({ projects }) {
             {projects.map((p, i) => (
               <tr key={p.id}>
                 <td>{i + 1}</td>
-                <td>
-                  <Link
-                    className="project-link"
-                    to={`/projects/${p.id}`}
-                    key={p.id}
-                  >
-                    {p.title}
-                  </Link>
-                </td>
+                <td>{p.title}</td>
                 <td>{p.dueDate.toDate().toDateString()}</td>
                 <td>{p.assignedUsersList.length}</td>
                 <td>
-                  {user.uid === p.createdBy.id && (
+                  <>
                     <Link
-                      to={`/projects/edit/${p.id}`}
                       className="edit-project"
+                      to={`/projects/${p.id}`}
                       style={{
                         position: "unset",
                       }}
                     >
-                      edit
+                      view
                     </Link>
-                  )}
+                    {user.uid === p.createdBy.id && (
+                      <Link
+                        to={`/projects/edit/${p.id}`}
+                        className="edit-project"
+                        style={{
+                          position: "unset",
+                        }}
+                      >
+                        edit
+                      </Link>
+                    )}
+                  </>
                 </td>
               </tr>
             ))}
