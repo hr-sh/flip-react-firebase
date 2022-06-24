@@ -148,11 +148,14 @@ export default function Create() {
           <span>set duedate*</span>
           <input
             required
-            type="date"
+            type="text"
             value={dueDate}
+            placeholder="Select a date"
             min={min}
             max={max}
             onChange={(e) => setDueDate(e.target.value)}
+            onFocus={(e) => (e.target.type = "date")}
+            onBlur={(e) => (e.target.type = "text")}
           />
         </label>
         <label>

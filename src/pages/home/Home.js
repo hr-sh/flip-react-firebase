@@ -24,7 +24,9 @@ export default function Home() {
   }
   // filter searchterm
   if (search !== "") {
-    projects = projects.filter((p) => p.title.includes(search));
+    projects = projects.filter((p) =>
+      p.title.toLowerCase().includes(search.toLowerCase())
+    );
   }
 
   return (
