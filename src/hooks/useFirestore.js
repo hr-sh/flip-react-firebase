@@ -57,7 +57,7 @@ export const useFirestore = (collection) => {
     }
   };
   // doUpdate
-  const doUpdate = async ({ data, id }) => {
+  const doUpdate = async (data, id) => {
     console.log("doUpdate called");
     dispatch({ type: "LOADING" });
     try {

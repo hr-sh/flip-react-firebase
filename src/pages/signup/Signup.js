@@ -1,54 +1,36 @@
 import { useState } from "react";
 import { useSignup } from "../../hooks/useSignup";
 import "./Signup.css";
+import InfoIcon from "../../assets/info_icon.svg";
+import LoadingBtn from "../../components/LoadingBtn";
+import AddImage from "../../components/AddImage";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
   const [pic, setPic] = useState(null);
   const [fileError, setFileError] = useState(null);
   const { doSignUp, error, isloading } = useSignup();
 
-  const handleFileChange = (e) => {
-    setPic(null);
-    let file = e.target.files[0];
-
-    if (!file) {
-      setFileError("Please select a file");
-      return;
-    }
-    if (!file.type.includes("image")) {
-      setFileError("file must be a image");
-      return;
-    }
-    if (file.size > 500000) {
-      setFileError("Image file size must be less than 500kb");
-      return;
-    }
-
-    setFileError(null);
-    setPic(file);
-    console.log("picture updated");
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    doSignUp(email, password, displayName, pic);
+    doSignUp(email, password, email.split("@")[0], pic);
   };
 
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
-      <div className="head-signup">
-        <h2>Sign up</h2>
-        <div className="view-image">
-          {!pic && <div className="placeholder"></div>}
-          {pic && <img src={URL.createObjectURL(pic)} alt="user profile" />}
-        </div>
+      <div className="head">
+        <h2 className="page-title">Sign up</h2>
+        <AddImage
+          title="Sign up"
+          pic={pic}
+          setPic={setPic}
+          setFileError={setFileError}
+        />
       </div>
       <label>
-        <span>email:</span>
+        <span>email</span>
         <input
           type="email"
           required
@@ -57,7 +39,13 @@ export default function Signup() {
         />
       </label>
       <label>
-        <span>password:</span>
+        <img
+          src={InfoIcon}
+          alt="info for password"
+          title="password must be atleat 6 letters long"
+        />
+
+        <span>password</span>
         <input
           type="password"
           required
@@ -65,28 +53,9 @@ export default function Signup() {
           value={password}
         />
       </label>
-      <label>
-        <span>display name:</span>
-        <input
-          type="text"
-          required
-          onChange={(e) => setDisplayName(e.target.value)}
-          value={displayName}
-        />
-      </label>
-      <label>
-        <span>profile image:</span>
-        <input type="file" onChange={handleFileChange} />
-        {fileError && <div className="error">{fileError}</div>}
-      </label>
+      {fileError && <div className="error">{fileError}</div>}
 
-      {!isloading ? (
-        <button className="btn">sign up</button>
-      ) : (
-        <button disabled className="btn">
-          loading..
-        </button>
-      )}
+      {!isloading ? <button className="btn">sign up</button> : <LoadingBtn />}
       {error && <div className="error">{error}</div>}
     </form>
   );

@@ -1,27 +1,28 @@
 // hook for subscribing to a firestore collection eg. users
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { projectFirestore } from "../firebase/config";
 
-export const useCollection = (collection, orderby, where) => {
+export const useCollection = (collection, where, orderby) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
   // collection is not reference type so wont trigger useeffect
   // where and orderby are refrence types [arrays or objects]
   // useRef().current is useful for stopping this
-  const w = useRef(where).current;
-  const o = useRef(orderby).current;
+  // const w = useMemo(() => where, [where]);
+  // const o = useMemo(() => orderby, [orderby]);
 
-  //getData on Component load
   useEffect(() => {
     let collectionRef = projectFirestore.collection(collection);
 
-    if (w) {
+    if (where) {
+      const w = where.split(",");
       collectionRef = collectionRef.where(...w);
     }
 
-    if (o) {
+    if (orderby) {
+      const o = orderby.split(",");
       collectionRef = collectionRef.orderBy(...o);
     }
 
@@ -39,7 +40,7 @@ export const useCollection = (collection, orderby, where) => {
     );
 
     return () => unsub();
-  }, [collection, w, o]);
+  }, [collection, where, orderby]);
 
   return { data, error };
 };

@@ -1,0 +1,14 @@
+.profile .banner {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.profile .banner .avatar {
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+
+.user-projects-list h2 {
+  margin-bottom: 10px;
+}

@@ -1,6 +1,7 @@
 import "./Login.css";
 import { useState } from "react";
 import { useSignin } from "../../hooks/useSignin";
+import LoadingBtn from "../../components/LoadingBtn";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ export default function Login() {
     <form className="auth-form" onSubmit={handleSubmit}>
       <h2>Login</h2>
       <label>
-        <span>email:</span>
+        <span>email</span>
         <input
           type="email"
           required
@@ -25,7 +26,7 @@ export default function Login() {
         />
       </label>
       <label>
-        <span>password:</span>
+        <span>password</span>
         <input
           type="password"
           required
@@ -34,13 +35,7 @@ export default function Login() {
         />
       </label>
 
-      {!isloading ? (
-        <button className="btn">login</button>
-      ) : (
-        <button disabled className="btn">
-          loading..
-        </button>
-      )}
+      {!isloading ? <button className="btn">login</button> : <LoadingBtn />}
       {error && <div className="error">{error}</div>}
     </form>
   );

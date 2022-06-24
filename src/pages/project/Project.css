@@ -23,6 +23,7 @@
   padding: 20px;
   border-radius: 6px;
   position: relative;
+  white-space: pre-line;
 }
 
 .project-details button.delete {

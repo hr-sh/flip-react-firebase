@@ -19,11 +19,10 @@ export const useSignout = () => {
 
       await projectAuth.signOut();
 
-      dispatch({ type: "LOGOUT" });
-
       if (!isCancelled) {
         setIsLoading(false);
         setError(null);
+        dispatch({ type: "LOGOUT" });
       }
     } catch (err) {
       if (!isCancelled) {

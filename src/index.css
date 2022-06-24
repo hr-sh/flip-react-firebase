@@ -20,6 +20,11 @@ body {
   font-size: 1.1em;
   background: var(--bg-color);
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 ul,
 li,
 p,
@@ -38,7 +43,8 @@ ul {
 .page-title {
   font-size: 1em;
   color: var(--heading-color);
-  display: inline-block;
+  display: block;
+  margin-bottom: 15px;
 }
 .btn {
   background: #fff;
@@ -64,11 +70,40 @@ ul {
 .btn.auth:hover {
   background: rgba(141, 105, 241, 0.1);
 }
+.edit-project {
+  font-size: 0.9rem;
+  z-index: 3;
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  color: var(--primary-color);
+  box-shadow: 0px 0px 2px 0px rgb(0 0 0 / 20%);
+  border-radius: 6px;
+  outline: none;
+  border: none;
+}
 
 /* forms */
 label {
   display: block;
+  position: relative;
   margin: 24px auto;
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+label img {
+  width: 1.2rem;
+  height: 1.2rem;
+  filter: invert(30%);
+  position: absolute;
+  top: 2px;
+  right: 2px;
 }
 label span {
   display: block;

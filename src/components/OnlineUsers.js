@@ -1,5 +1,6 @@
 import "./OnlineUsers.css";
 import { useCollection } from "../hooks/useCollection";
+import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 
 export default function OnlineUsers() {
@@ -11,13 +12,13 @@ export default function OnlineUsers() {
       {error && <div className="error">{error}</div>}
       {data &&
         data.map((u) => (
-          <div className="user-list-item" key={u.id}>
+          <Link to={`/user/${u.id}`} className="user-list-item" key={u.id}>
             <span>{u.displayName}</span>
             <div className="wrapper">
               <Avatar src={u.photoURL} />
               {u.online && <span className="user-status" title="online"></span>}
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );

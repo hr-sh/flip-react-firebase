@@ -7,24 +7,27 @@ export const useDocument = (collection, id) => {
 
   //getData on Component load
   useEffect(() => {
-    let documentRef = projectFirestore.collection(collection).doc(id);
+    let unsub = () => {};
+    if (id) {
+      let documentRef = projectFirestore.collection(collection).doc(id);
 
-    const unsub = documentRef.onSnapshot(
-      (res) => {
-        if (res.data()) {
-          const r = { ...res.data(), id: res.id };
+      unsub = documentRef.onSnapshot(
+        (res) => {
+          if (res.data()) {
+            const r = { ...res.data(), id: res.id };
 
-          setData(r);
-          setError(null);
-        } else {
-          setError("project doesnot exist");
+            setData(r);
+            setError(null);
+          } else {
+            setError("project doesnot exist");
+          }
+        },
+        (err) => {
+          console.log("useDocument Error: ", err);
+          setError(err.message);
         }
-      },
-      (err) => {
-        console.log("useDocument Error: ", err);
-        setError(err.message);
-      }
-    );
+      );
+    }
 
     return () => unsub();
   }, [collection, id]);

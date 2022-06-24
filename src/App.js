@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import OnlineUsers from "./components/OnlineUsers";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const { user, authStatusCheckDone } = useAuthContext();
@@ -38,7 +39,13 @@ function App() {
               <Route path="/signup">
                 {user ? <Redirect to="/" /> : <Signup />}
               </Route>
+              <Route path="/user/:id">
+                {!user ? <Redirect to="/login" /> : <Profile />}
+              </Route>
               <Route path="/create">
+                {!user ? <Redirect to="/login" /> : <Create />}
+              </Route>
+              <Route path="/projects/edit/:id">
                 {!user ? <Redirect to="/login" /> : <Create />}
               </Route>
               <Route path="/projects/:id">

@@ -20,7 +20,7 @@
   gap: 10px;
   letter-spacing: 1px;
   color: var(--heading-color);
-  font-weight: bold;
+  font-size: 0.6rem;
 }
 
 .navbar .logo img {

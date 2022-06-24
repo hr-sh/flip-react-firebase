@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSignout } from "../hooks/useSignout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLocation, useHistory } from "react-router-dom";
+import LoadingBtn from "./LoadingBtn";
 
 export default function Navbar() {
   const { doSignOut, error, isloading } = useSignout();
@@ -20,7 +21,7 @@ export default function Navbar() {
       <ul>
         <li className="logo" onClick={() => history.push("/")}>
           <img src={Logo} alt="flip site logo" />
-          <span>Flip</span>
+          <h1>Sample react app</h1>
         </li>
 
         {!user ? (
@@ -38,17 +39,12 @@ export default function Navbar() {
           </>
         ) : (
           <li>
-            {location.pathname === "/" && !isloading ? (
+            {location.pathname === "/" && !isloading && (
               <button className="btn auth" onClick={doSignOut}>
                 Logout
               </button>
-            ) : (
-              isloading && (
-                <button className="btn auth" disabled>
-                  Logging out..
-                </button>
-              )
             )}
+            {isloading && <LoadingBtn />}
           </li>
         )}
       </ul>

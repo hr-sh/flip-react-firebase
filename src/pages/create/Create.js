@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Select from "react-select";
 import { useCollection } from "../../hooks/useCollection";
 import { timestamp } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from "../../hooks/useFirestore";
+import LoadingBtn from "../../components/LoadingBtn";
+import { useDocument } from "../../hooks/useDocument";
 
 import "./Create.css";
 
@@ -16,10 +18,15 @@ const categories = [
 ];
 
 export default function Create() {
+  const id = useLocation().pathname.split("/")[3];
+  // console.log(id);
+  const { data: project, error: projectError } = useDocument("projects", id);
+
   const { data } = useCollection("users");
   const [users, setUsers] = useState([]);
   const { user } = useAuthContext();
-  const { isloading, error, success, doAdd } = useFirestore("projects");
+  const { isloading, error, success, doAdd, doUpdate } =
+    useFirestore("projects");
 
   const [formError, setFormError] = useState(null);
   const [title, setTitle] = useState("");
@@ -30,16 +37,47 @@ export default function Create() {
 
   const history = useHistory();
 
+  //yyyy/mm/dd
+  const current = new Date();
+  const min = current.toISOString().split("T")[0];
+  const max = new Date(current.setMonth(current.getMonth() + 3))
+    .toISOString()
+    .split("T")[0];
+
+  // console.log(min);
+  // console.log(max);
+  // console.log("datestate", dueDate);
   useEffect(() => {
     if (data) {
       const options = data.map((u) => ({ value: u, label: u.displayName }));
       setUsers(options);
     }
+    if (data && project && project !== undefined) {
+      setTitle(project.title);
+      setDetails(project.details);
+      // console.log("project date", project.dueDate.toDate());
+      setDueDate(project.dueDate.toDate().toISOString().split("T")[0]);
+
+      setCategory(categories.filter((c) => c.value === project.category));
+      const d = data
+        .map((u) => ({ value: u, label: u.displayName }))
+        .filter((o) => {
+          let c = false;
+          project.assignedUsersList.forEach((u) => {
+            if (u.id === o.value.id) {
+              c = true;
+            }
+          });
+          return c;
+        });
+      // console.log(d);
+      setAssignedUsers(d);
+    }
     if (success) {
       // redirect user to home "/"
       history.push("/");
     }
-  }, [data, success, history]);
+  }, [data, success, history, project]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,15 +113,21 @@ export default function Create() {
       assignedUsersList,
     };
 
-    doAdd(project);
+    if (id) {
+      doUpdate(project, id);
+    } else {
+      doAdd(project);
+    }
   }; //handlesubmit ends here
 
   return (
     <div className="create-form">
-      <h2 className="page-title">Create a new project</h2>
+      <h2 className="page-title">
+        {id ? "Edit project" : "Create a new project"}
+      </h2>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>project title:</span>
+          <span>project title*</span>
           <input
             required
             type="text"
@@ -92,7 +136,7 @@ export default function Create() {
           />
         </label>
         <label>
-          <span>project details:</span>
+          <span>project details*</span>
           <textarea
             required
             type="text"
@@ -101,34 +145,39 @@ export default function Create() {
           ></textarea>
         </label>
         <label>
-          <span>set duedate:</span>
+          <span>set duedate*</span>
           <input
             required
             type="date"
             value={dueDate}
+            min={min}
+            max={max}
             onChange={(e) => setDueDate(e.target.value)}
           />
         </label>
         <label>
-          <span>proect category:</span>
+          <span>project category*</span>
           <Select
+            value={category}
             options={categories}
             onChange={(option) => setCategory(option.value)}
           />
         </label>
         <label>
-          <span>assign to:</span>
+          <span>assign to*</span>
           <Select
+            value={assignedUsers}
             options={users}
             onChange={(option) => setAssignedUsers(option)}
             isMulti
           />
         </label>
-        {!isloading && <button className="btn">Add project</button>}
-        {isloading && (
-          <button className="btn" disabled>
-            saving..
+        {!isloading ? (
+          <button className="btn">
+            {id ? "update project" : "add project"}
           </button>
+        ) : (
+          <LoadingBtn />
         )}
         {formError && <p className="error">{formError}</p>}
         {error && <p className="error">{error}</p>}
