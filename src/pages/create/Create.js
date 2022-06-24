@@ -57,8 +57,9 @@ export default function Create() {
       setDetails(project.details);
       // console.log("project date", project.dueDate.toDate());
       setDueDate(project.dueDate.toDate().toISOString().split("T")[0]);
-
-      setCategory(categories.filter((c) => c.value === project.category));
+      const dd = categories.filter((c) => c.value === project.category);
+      console.log(dd);
+      // setCategory(categories.filter((c) => c.value === project.category)[0]);
       const d = data
         .map((u) => ({ value: u, label: u.displayName }))
         .filter((o) => {
