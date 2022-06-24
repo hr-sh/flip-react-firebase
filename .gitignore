@@ -7,6 +7,7 @@
 
 # firebase
 /src/firebase
+/.firebase
 
 # testing
 /coverage

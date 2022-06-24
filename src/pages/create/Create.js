@@ -40,9 +40,9 @@ export default function Create() {
   //yyyy/mm/dd
   const current = new Date();
   const min = current.toISOString().split("T")[0];
-  const max = new Date(current.setMonth(current.getMonth() + 3))
-    .toISOString()
-    .split("T")[0];
+  // const max = new Date(current.setMonth(current.getMonth() + 3))
+  //   .toISOString()
+  //   .split("T")[0];
 
   useEffect(() => {
     if (data) {
@@ -150,12 +150,8 @@ export default function Create() {
             required
             type="text"
             value={dueDate}
-            placeholder="Select a date"
             min={min}
-            max={max}
             onChange={(e) => setDueDate(e.target.value)}
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => (e.target.type = "text")}
           />
         </label>
         <label>
