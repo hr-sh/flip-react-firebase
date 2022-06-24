@@ -22,7 +22,7 @@ export default function ProjectList({ projects }) {
               <tr key={p.id}>
                 <td>{i + 1}</td>
                 <td>{p.title}</td>
-                <td>{p.dueDate.toDate().toDateString()}</td>
+                <td>{p.dueDate.toDate().toDateString().slice(4)}</td>
                 <td>{p.assignedUsersList.length}</td>
                 <td>
                   <>
